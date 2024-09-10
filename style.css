@@ -1,6 +1,6 @@
 :root {
-    --color-primary-light: #f3f3f3;
-    --color-secondary:hsla(262, 83%, 58%, 0.5);
+    --color-primary-light: #f1f1f1;
+    --color-secondary:hsl(262, 74%, 59%);
     
 }
 
@@ -16,16 +16,19 @@
 
 main {
     display: flex;
-    flex-direction: row;
-    background-color: aquamarine;
+    flex-direction: column;
+
 }
 
-.category-wrapper {
-    background-color: aqua;
+main section {
+    
     padding: .5em;
+    margin: .5em;
+    border-radius: 30px;
+
 }
 
-.category-wrapper p {
+main section p {
     margin-left: 1rem;
     font-weight: 600;
 }
@@ -36,8 +39,14 @@ main {
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    margin-top: .5em;
+    border-radius: 30px;
+    background-color: var(--color-primary-light);
+    box-shadow: 10px 10px 20px #dddddd,
+            -10px -10px 20px #ffffff;
+ 
+
   
-    
 }
 
 .card {
@@ -166,12 +175,10 @@ main {
     
 }
 
-.cart-button:hover>*  {
+button.cart-button:hover, .cart-button:hover>* {
     background-color: var(--color-secondary);
 }
-.cart-button:hover> {
-    background-color: var(--color-secondary);
-}
+
 
 .cart-button .cart-icon {
     width: 1rem;
