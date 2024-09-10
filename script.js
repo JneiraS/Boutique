@@ -77,9 +77,19 @@ class Categorie {
      `;
   }
 
+  generateNav() {
+    return `
+                <li id="${this.name}"><a href="#">${this.name}</a></li>
+            `;
+  }
+
   display() {
+    // Insertion dynamique de la section
     const categoryWrapper = document.querySelector("main");
     categoryWrapper.insertAdjacentHTML("beforeend", this.generateHTML());
+    // Insertion dynamique du nav
+    const nav = document.querySelector("nav ul");
+    nav.insertAdjacentHTML("beforeend", this.generateNav());
   }
 }
 
@@ -112,3 +122,47 @@ getData("data.csv").then((data) => {
     }
   });
 });
+
+
+/**
+ * Lorsque l'utilisateur clique sur un élément de la liste, affiche
+ * ou cache les éléments correspondants dans la section.
+ * Si l'élément cliqué est "all", affiche tous les éléments.
+ *
+ * @param {Event} e L'événement de clic
+ */
+document.addEventListener("DOMContentLoaded", () => {
+  const ul = document.querySelector("ul");
+
+  if (ul) {
+    ul.addEventListener("click", (e) => {
+      const li = e.target.closest("li"); // Récupère l'élément de liste cliqué
+      if (li) {
+        const categoryId = li.id; // Récupère l'ID de l'élément cliqué
+
+        // Si l'ID est "all", affiche tous les éléments
+        if (categoryId === "all") {
+          // Affiche tous les éléments
+          document.querySelectorAll("main section").forEach((element) => {
+            element.style.display = "";
+          });
+        } else {
+          // Sinon, masquer tous les éléments
+          document.querySelectorAll("main section").forEach((element) => {
+            element.style.display = "none";
+          });
+
+          // Afficher uniquement les éléments avec la classe correspondant à l'ID
+          document
+            .querySelectorAll(`.${categoryId}-wrapper`)
+            .forEach((element) => {
+              element.style.display = "";
+            });
+        }
+      }
+    });
+  } else {
+    console.error("L'élément <ul> n'a pas été trouvé.");
+  }
+});
+

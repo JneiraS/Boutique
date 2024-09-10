@@ -1,9 +1,11 @@
 :root {
-    --color-primary-light: #f1f1f1;
-    --color-secondary:hsl(262, 74%, 59%);
-    
+    --color-primary-light: #f8f8f8;
+    --color-secondary:hsl(189, 32%, 33%);
+    --header-height: 2em;
+    --nav-width: 11em;
+    --box-shadow: 5px 5px 10px #dddddd81,
+        -5px -5px 20px #ffffff;
 }
-
 
 
 * {
@@ -11,12 +13,92 @@
     padding: 0;
     box-sizing: border-box;
     font-family: Arial, Helvetica, sans-serif;
-    background-color: var(--color-primary-light);
+    background-color: var(--color--light);
+    text-decoration: none;
+    color: inherit;
+}
+
+
+body {
+background-color: var(--color-primary-light);
+padding-bottom: 2em;
+}
+
+header {
+    position: sticky;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: var(--header-height);
+    background-color: var(--color-secondary);
+    color: var(--color-primary-light);
+    z-index: 10;
+
+}
+
+header img {
+    position: absolute;
+    width: 1.7em;
+    height:1.7em;
+    margin-left: 1em;
+    right: 5em;
+    top: 2px;
+    filter: invert(100%);
+    cursor: pointer;
+
+
+    
+}
+
+header p {
+background-color: #dddddd00;
+font-weight: 800;
+font-size: 3rem;
 }
 
 main {
     display: flex;
+    margin-left: var(--nav-width);
     flex-direction: column;
+   background-color: var(--color-primary-light);
+
+}
+
+nav {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    width: var(--nav-width);
+    background-color: var(--color-primary-light);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1em;
+}
+a {
+font-size: .8em;
+}
+nav > ul {
+    list-style: none;
+    margin-top: calc(var(--header-height) *2);
+    position:sticky;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: left;
+}
+
+nav > ul > li {
+    margin-bottom: .3em;
+    width: 100%;
+    background-color: var(--color-secondary);
+    color: var(--color-primary-light);
+    padding: .2em 1em;
+    border-radius: 5px;
+    cursor: pointer;
 
 }
 
@@ -31,20 +113,22 @@ main section {
 main section p {
     margin-left: 1rem;
     font-weight: 600;
+    color: #000000a8;
+    padding-top: .5em;
+    border-top: 1px solid #ffffff;
+
 }
 
 .products-wrapper {
+    flex-grow: 1;
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
     justify-content: center;
-    align-items: center;
+    /* align-items: center;  */
     margin-top: .5em;
     border-radius: 30px;
     background-color: var(--color-primary-light);
-    box-shadow: 10px 10px 20px #dddddd,
-            -10px -10px 20px #ffffff;
- 
 
   
 }
@@ -55,10 +139,9 @@ main section p {
     border-radius: 30px;
     background-color: var(--color-primary-light);
     padding: 1.5rem;
-    box-shadow: 10px 10px 20px #dddddd,
-        -10px -10px 20px #ffffff;
+    box-shadow: var(--box-shadow);
     border: 1px solid #ffffff34;
-    margin: 1rem;
+    margin:0em 2em;
 }
 
 .image_container {
@@ -69,7 +152,6 @@ main section p {
     width: 100%;
     height: 8rem;
     background-color: var(--color-primary-light);
-
     border-radius: 0.5rem;
     transition: 1s;
 }
@@ -110,39 +192,7 @@ main section p {
     display: flex;
     align-items: center;
     gap: 0.25rem;
-
     margin-top: 0.25rem;
-}
-
-.list-size .item-list {
-    list-style: none;
-}
-
-.list-size .item-list-button {
-    cursor: pointer;
-
-    padding: 0.5rem;
-    background-color: var(--zinc-800);
-
-    font-size: 0.75rem;
-    color: var(--light);
-
-    border: 2px solid var(--zinc-800);
-    border-radius: 0.25rem;
-
-    transition: all 0.3s ease-in-out;
-}
-
-.item-list-button:hover {
-    border: 2px solid var(--light);
-}
-
-.item-list-button:focus {
-    background-color: var(--primary);
-
-    border: 2px solid var(--primary-shadow);
-
-    box-shadow: inset 0px 1px 4px var(--primary-shadow);
 }
 
 .action {
@@ -153,7 +203,7 @@ main section p {
 }
 
 .price {
-    font-size: 1.5rem;
+    font-size: 1rem;
     font-weight: 700;
     color: var(--light);
 }
@@ -170,12 +220,14 @@ main section p {
     font-weight: 500;
     color: var(--light);
     text-wrap: nowrap;
-    border: 2px solid var(--color-secondary);
+    border: 1px solid var(--color-secondary);
     border-radius: 0.5rem;
+    transition: all 1s;
     
 }
 
-button.cart-button:hover, .cart-button:hover>* {
+button.cart-button:hover {
+    transition: all .5s;
     background-color: var(--color-secondary);
 }
 
