@@ -3,8 +3,8 @@
     --color-secondary:hsl(189, 32%, 33%);
     --header-height: 2em;
     --nav-width: 11em;
-    --box-shadow: 10px 10px 20px #dddddd,
-        -10px -10px 20px #ffffff;
+    --box-shadow: 5px 5px 10px #dddddd81,
+        -5px -5px 20px #ffffff;
 }
 
 
@@ -21,6 +21,7 @@
 
 body {
 background-color: var(--color-primary-light);
+padding-bottom: 2em;
 }
 
 header {
@@ -35,6 +36,21 @@ header {
     z-index: 10;
 
 }
+
+header img {
+    position: absolute;
+    width: 1.7em;
+    height:1.7em;
+    margin-left: 1em;
+    right: 5em;
+    top: 2px;
+    filter: invert(100%);
+    cursor: pointer;
+
+
+    
+}
+
 header p {
 background-color: #dddddd00;
 font-weight: 800;
@@ -77,8 +93,12 @@ nav > ul {
 
 nav > ul > li {
     margin-bottom: .3em;
-    padding-left: 2em;
     width: 100%;
+    background-color: var(--color-secondary);
+    color: var(--color-primary-light);
+    padding: .2em 1em;
+    border-radius: 5px;
+    cursor: pointer;
 
 }
 
@@ -183,7 +203,7 @@ main section p {
 }
 
 .price {
-    font-size: 1.5rem;
+    font-size: 1rem;
     font-weight: 700;
     color: var(--light);
 }
@@ -202,10 +222,12 @@ main section p {
     text-wrap: nowrap;
     border: 1px solid var(--color-secondary);
     border-radius: 0.5rem;
+    transition: all 1s;
     
 }
 
-button.cart-button:hover, .cart-button:hover>* {
+button.cart-button:hover {
+    transition: all .5s;
     background-color: var(--color-secondary);
 }
 
