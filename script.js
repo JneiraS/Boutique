@@ -13,7 +13,6 @@ function getData(csvFilePath) {
       // Convertit le contenu du fichier CSV en un tableau d'objets
       const rows = data.split("\n");
       const headers = rows[0].split(",");
-
       const arrayData = rows.slice(1).map((row) => {
         const cols = row.split(",");
         const obj = {};
@@ -59,7 +58,7 @@ class Product {
               </div>
 
               <!-- Bouton Ajouter au panier -->
-              <button class="cart-button" onclick="createProduct('${this.nom}', '${this.image}', '${this.prix}')">
+              <button class="cart-button" onclick="createProduct('${this.nom}', '${this.image}', '${this.prix}');displayShoppingCardInCart()">
                   <span>Add to cart</span>
               </button>
           </div>
@@ -67,57 +66,71 @@ class Product {
       `;
   }
 
+  generateHTMLShoppingCard() {
+    return `
+
+  <div class="product-header">
+
+                <div class="product-line">
+                    <p class="hearder-name">Nom</p>
+                    <p class="hearder-price">Prix</p>
+                    <p class="hearder-quantity">Quantité</p>
+
+                    <p class="product-name">${this.nom}</p>
+                    <p class="product-price">${this.prix}</p>
+                    <p class="product-quantity"></p>
+                    <img src="statics/${this.image}" alt="${this.nom}">
+                </div>
+            </div>
+
+  `;
+  }
+
   display() {
     const categoryWrapper = document.querySelector(".products-wrapper");
     categoryWrapper.insertAdjacentHTML("beforeend", this.generateHTML());
   }
+
+  displayShoppingCard() {
+    const elemensInCard = document.querySelector(".shopping-card");
+    elemensInCard.insertAdjacentHTML(
+      "beforeend",
+      this.generateHTMLShoppingCard()
+    );
+  }
 }
 
-let shoppingCart = [];
+const shoppingCart = [];
 
 /**
  * Ajoute un produit au panier.
  */
 function createProduct(nom, image, prix) {
-
+  // Ajoute le produit au panier.
   const product = new Product(nom, image, prix);
   shoppingCart.push(product);
+
+  // Affiche le nombre d'articles dans le panier.
   document.getElementById("nombre-articles").style.display = "block";
-  document.getElementById("nombre-articles").innerHTML = `${shoppingCart.length}`;
-  
-  console.log("shoppingCart", shoppingCart);
-  
+  document.getElementById(
+    "nombre-articles"
+  ).innerHTML = `${shoppingCart.length}`;
+
+  console.log("Panier :", shoppingCart);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/**
+ * Affiche les produits du panier.
+ */
+function displayShoppingCardInCart() {
+  const shoppingCartElement = document.querySelector(".shopping-card");
+  shoppingCartElement.innerHTML = "";
+  shoppingCart.forEach((product) => {
+    shoppingCartElement.insertAdjacentHTML(
+      "beforeend",
+      product.generateHTMLShoppingCard()
+    );
+  });
+}
 
 class Categorie {
   constructor(name) {
