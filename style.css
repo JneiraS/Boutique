@@ -1,6 +1,6 @@
 :root {
     --color-primary-light: #f0f0f0;
-    --color-secondary:hsl(189, 37%, 38%);
+    --color-secondary: hsl(189, 37%, 38%);
     --header-height: 2em;
     --nav-width: 11em;
     --box-shadow: 5px 5px 10px #dddddd81,
@@ -18,8 +18,8 @@
 }
 
 body {
-background-color: var(--color-primary-light);
-padding-bottom: 2em;
+    background-color: var(--color-primary-light);
+    padding-bottom: 2em;
 }
 
 header {
@@ -31,10 +31,10 @@ header {
     height: var(--header-height);
     background-color: var(--color-secondary);
     color: var(--color-primary-light);
-    z-index: 10;
+    z-index: 7;
 }
 
-header .logos p{
+header .logos #nombre-articles {
     display: none;
     position: absolute;
     font-weight: 300;
@@ -43,20 +43,15 @@ header .logos p{
     right: 6.1em;
     top: .4em;
     background-color: rgba(224, 86, 86, 0.993);
-    padding: .3em .6em;;
+    padding: .3em .6em;
+    ;
     border-radius: 3em;
-    
- 
- 
-    
-    
-
 }
 
 header img {
     position: absolute;
     width: 1.7em;
-    height:1.7em;
+    height: 1.7em;
     margin-left: 1em;
     right: 5em;
     top: 2px;
@@ -65,16 +60,16 @@ header img {
 }
 
 header p {
-background-color: #dddddd00;
-font-weight: 800;
-font-size: 3rem;
+    background-color: #dddddd00;
+    font-weight: 800;
+    font-size: 3rem;
 }
 
 main {
     display: flex;
     margin-left: var(--nav-width);
     flex-direction: column;
-   background-color: var(--color-primary-light);
+    background-color: var(--color-primary-light);
 }
 
 nav {
@@ -90,20 +85,22 @@ nav {
     align-items: center;
     padding: 1em;
 }
+
 a {
-font-size: .8em;
+    font-size: .8em;
 }
-nav > ul {
+
+nav>ul {
     list-style: none;
     margin-top: calc(var(--header-height) *2);
-    position:sticky;
+    position: sticky;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: left;
 }
 
-nav > ul > li {
+nav>ul>li {
     margin-bottom: .3em;
     width: 100%;
     background-color: var(--color-secondary);
@@ -114,7 +111,7 @@ nav > ul > li {
 }
 
 main section {
-    
+
     padding: .5em;
     margin: .5em;
     border-radius: 30px;
@@ -147,7 +144,7 @@ main section p {
     padding: 1.5rem;
     box-shadow: var(--box-shadow);
     border: 1px solid #ffffff;
-    margin:0em 2em;
+    margin: 0em 2em;
 }
 
 .image_container {
@@ -234,6 +231,77 @@ button.cart-button:hover {
     background-color: var(--color-secondary);
 }
 
-.cart-button .cart-icon {
+/* .cart-button .cart-icon {
     width: 1rem;
+} */
+
+/* Panier */
+.shopping-card {
+    position: absolute;
+    top: var(--header-height);
+    right: 0;
+    /* right: -30%; */
+    width: fit-content;
+    height: 100vw;
+    backdrop-filter: blur(2px);
+    background-color: rgba(0, 0, 0, 0.219);
+    z-index: 6;
+}
+
+
+
+
+.shopping-card {
+    display: block;
+    padding: .5em;
+}
+
+.product-line {
+    display: grid;
+    padding: .3em;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    justify-items: center;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.411);
+    border: 1px solid #ffffff36;
+    border-radius: 1em;
+}
+
+.product-line .hearder-name,
+.product-line .hearder-price,
+.product-line .hearder-quantity {
+    color: rgb(165, 165, 165);
+    font-weight: 200;
+}
+
+
+.product-line .product-name,
+.product-line .product-price,
+.product-line .product-quantity {
+    color: rgb(66, 66, 66);
+    font-weight: 200;
+}
+
+.header-name,
+.header-price,
+.header-quantity {
+    grid-row: 1 / span 1;
+}
+
+.product-name,
+.product-price,
+.product-quantity {
+    grid-row-start: 2;
+}
+
+.product-line img {
+    grid-column: 4 / span 1;
+    grid-row: 1 / span 3;
+    width: 4em;
+    height: 4em;
+    object-fit: contain;
+    background-color: rgb(247, 247, 247);
+    margin-right: 1em;
+    border-radius: 5px;
 }
