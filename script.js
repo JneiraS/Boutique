@@ -1,13 +1,16 @@
 // Fonction pour récupérer les données depuis un fichier CSV
 function getData(csvFilePath) {
+  // Récupère le contenu du fichier CSV
   return fetch(csvFilePath)
     .then((response) => {
+      //  Vérifie si le chargement du fichier CSV a réussi
       if (!response.ok) {
         throw new Error("Erreur lors du chargement du fichier CSV");
       }
       return response.text();
     })
     .then((data) => {
+      // Convertit le contenu du fichier CSV en un tableau d'objets
       const rows = data.split("\n");
       const headers = rows[0].split(",");
 
@@ -24,6 +27,7 @@ function getData(csvFilePath) {
     })
     .catch((error) => console.error("Erreur :", error));
 }
+
 // Classe Product pour créer et afficher les produits
 class Product {
   constructor(nom, image, prix, categorie) {
@@ -33,27 +37,34 @@ class Product {
     this.categorie = categorie;
   }
 
+  // Génère le HTML pour un produit
   generateHTML() {
     return `
-                  <div class="card">
-                    <div class="image_container">
-                        <img src="statics/${this.image}" alt="${this.nom}">
-                    </div>
-                    <div class="title">
-                        <span>${this.nom}</span>
-                    </div>
-                 
-                    <div class="action">
-                        <div class="price">
-                            <span>${this.prix}</span>
-                        </div>
+        <div class="card">
+          <!-- Image du produit -->
+          <div class="image_container">
+              <img src="statics/${this.image}" alt="${this.nom}">
+          </div>
 
-                        <button class="cart-button">
-                            <span>Add to cart</span>
-                        </button>
-                    </div>
-                </div>
-                `;
+          <!-- Titre du produit -->
+          <div class="title">
+              <span>${this.nom}</span>
+          </div>
+
+          <!-- Prix et bouton Ajouter au panier -->
+          <div class="action">
+              <!-- Prix du produit -->
+              <div class="price">
+                  <span>${this.prix}</span>
+              </div>
+
+              <!-- Bouton Ajouter au panier -->
+              <button class="cart-button">
+                  <span>Add to cart</span>
+              </button>
+          </div>
+      </div>
+      `;
   }
 
   display() {
@@ -67,6 +78,7 @@ class Categorie {
     this.name = name;
   }
 
+  // Génère le code HTML pour la catégorie
   generateHTML() {
     return `
             <section class="${this.name}-wrapper">
@@ -77,14 +89,16 @@ class Categorie {
      `;
   }
 
+  // Génère le code HTML pour le menu de navigation
   generateNav() {
     return `
                 <li id="${this.name}"><a href="#">${this.name}</a></li>
             `;
   }
 
+  // Affiche la catégorie dans la page
   display() {
-    // Insertion dynamique de la section
+    // Insertion dynamique de la section dans le main
     const categoryWrapper = document.querySelector("main");
     categoryWrapper.insertAdjacentHTML("beforeend", this.generateHTML());
     // Insertion dynamique du nav
@@ -93,18 +107,23 @@ class Categorie {
   }
 }
 
-// Récupération des catégories depuis le CSV
+// Récupère les données du fichier CSV et crée les objets Product correspondants.
+// Les produits sont ensuite affichés dans la page en fonction de leur catégorie.
 const categories = new Set();
 getData("data.csv").then((data) => {
+  // Parcourt les données et stocke les noms de catégorie dans un Setpour éviter les doublons.
   data.forEach((productData) => categories.add(productData["Catégorie"]));
 
+  // Parcourt le Set des catégories et crée un objet Categorie pour chaque catégorie.
+  // Appelle la méthode display() pour afficher la catégorie dans la page.
   categories.forEach((category) => {
     const categorie = new Categorie(category);
     categorie.display();
   });
 });
 
-// Récupération des produits depuis le CSV
+// Charge les données du fichier CSV et crée les objets Product correspondants.
+// Les produits sont ensuite affichés dans la page en fonction de leur catégorie.
 getData("data.csv").then((data) => {
   data.forEach((productData) => {
     const product = new Product(
@@ -114,6 +133,7 @@ getData("data.csv").then((data) => {
       productData["Catégorie"]
     );
 
+    // Affiche le produit dans la section correspondant à sa catégorie
     const categoryWrapper = document.querySelector(
       `.${product.categorie}-wrapper .products-wrapper`
     );
@@ -123,14 +143,8 @@ getData("data.csv").then((data) => {
   });
 });
 
-
-/**
- * Lorsque l'utilisateur clique sur un élément de la liste, affiche
- * ou cache les éléments correspondants dans la section.
- * Si l'élément cliqué est "all", affiche tous les éléments.
- *
- * @param {Event} e L'événement de clic
- */
+// Lorsque l'utilisateur clique sur un élément de la liste, affiche ou cache les
+// éléments correspondants dans la section. Si l'élément cliqué est "all", affiche tous les éléments.
 document.addEventListener("DOMContentLoaded", () => {
   const ul = document.querySelector("ul");
 
@@ -161,8 +175,5 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
     });
-  } else {
-    console.error("L'élément <ul> n'a pas été trouvé.");
   }
 });
-
