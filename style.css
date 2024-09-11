@@ -34,6 +34,25 @@ header {
     z-index: 10;
 }
 
+header .logos p{
+    display: none;
+    position: absolute;
+    font-weight: 300;
+    font-size: .7rem;
+    margin-left: 1em;
+    right: 6.1em;
+    top: .4em;
+    background-color: rgba(224, 86, 86, 0.993);
+    padding: .3em .6em;;
+    border-radius: 3em;
+    
+ 
+ 
+    
+    
+
+}
+
 header img {
     position: absolute;
     width: 1.7em;

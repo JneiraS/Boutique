@@ -59,7 +59,7 @@ class Product {
               </div>
 
               <!-- Bouton Ajouter au panier -->
-              <button class="cart-button">
+              <button class="cart-button" onclick="createProduct('${this.nom}', '${this.image}', '${this.prix}')">
                   <span>Add to cart</span>
               </button>
           </div>
@@ -72,6 +72,52 @@ class Product {
     categoryWrapper.insertAdjacentHTML("beforeend", this.generateHTML());
   }
 }
+
+let shoppingCart = [];
+
+/**
+ * Ajoute un produit au panier.
+ */
+function createProduct(nom, image, prix) {
+
+  const product = new Product(nom, image, prix);
+  shoppingCart.push(product);
+  document.getElementById("nombre-articles").style.display = "block";
+  document.getElementById("nombre-articles").innerHTML = `${shoppingCart.length}`;
+  
+  console.log("shoppingCart", shoppingCart);
+  
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 class Categorie {
   constructor(name) {
