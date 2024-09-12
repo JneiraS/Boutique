@@ -129,8 +129,6 @@ class Product {
   }
 }
 
-const shoppingCart = [];
-
 /**
  * Ajoute un produit au panier.
  */
@@ -169,6 +167,10 @@ function displayShoppingCardInCart() {
   shoppingCartElement.innerHTML = html + totalPrice;
 }
 
+
+/**
+ * Classe Categorie pour créer et afficher les catégories de produits
+ */
 class Categorie {
   constructor(name) {
     this.name = name;
@@ -203,11 +205,42 @@ class Categorie {
   }
 }
 
+/**
+ * Fonction qui permet d'afficher le panier en cliquant sur l'image panier.
+ */
+function shoppingCardVisibility() {
+  const panier = document.getElementById("panier");
+  if (panier.style.display === "block") {
+    // Masquer le panier
+    panier.style.display = "none";
+  } else {
+    // Afficher le panier
+    panier.style.transition = "all 0.5s ease-in-out";
+    panier.style.display = "block";
+  }
+}
+
+/**
+ * Change la couleur secondaire du site en fonction de la valeur de l'élément
+ * <input type="color"> qui a déclenché l'événement.
+ */
+function changeColor() {
+  document.documentElement.style.setProperty('--color-secondary', event.target.value);
+}
+
+
+
+
+
+
+
+const shoppingCart = [];
+const categories = new Set();
+
 // Récupère les données du fichier CSV et crée les objets Product correspondants.
 // Les produits sont ensuite affichés dans la page en fonction de leur catégorie.
-const categories = new Set();
 getData("data.csv").then((data) => {
-  // Parcourt les données et stocke les noms de catégorie dans un Setpour éviter les doublons.
+  // Parcourt les données et stocke les noms de catégorie dans un Set pour éviter les doublons.
   data.forEach((productData) => categories.add(productData["Catégorie"]));
 
   // Parcourt le Set des catégories et crée un objet Categorie pour chaque catégorie.
@@ -274,27 +307,3 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-/**
- * Fonction qui permet d'afficher le panier en cliquant sur l'image panier.
- */
-function shoppingCardVisibility() {
-  const panier = document.getElementById("panier");
-  if (panier.style.display === "block") {
-    // Masquer le panier
-    panier.style.display = "none";
-  } else {
-    // Afficher le panier
-    panier.style.transition = "all 0.5s ease-in-out";
-    panier.style.display = "block";
-  }
-}
-
-
-
-/**
- * Change la couleur secondaire du site en fonction de la valeur de l'élément
- * <input type="color"> qui a déclenché l'événement.
- */
-function changeColor() {
-  document.documentElement.style.setProperty('--color-secondary', event.target.value);
-}
