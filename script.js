@@ -36,6 +36,20 @@ class Product {
     this.categorie = categorie;
   }
 
+  /**
+   * Calcule le montant total du panier, en HT et en TTC, en prenant en compte
+   * les prix des produits dans le tableau listeProduits.
+   */
+  static calculateTotalPrice(listeProduits) {
+    const totalHT = listeProduits.reduce((acc, { prix }) => acc + parseFloat(prix), 0);
+    const totalTTC = totalHT / 1.206;
+
+    return ` 
+      <div class="total-hors-tva"><p>TOTAL HT:</p> ${totalTTC.toFixed(2)}€ </div>
+      <div class="total-ttc"><p>TOTAL TTC:</p>${totalHT.toFixed(2)}€</div>
+    `;
+  }
+
   // Génère le HTML pour un produit
   generateHTML() {
     return `
@@ -71,17 +85,19 @@ class Product {
 
   <div class="product-header">
 
-                <div class="product-line">
-                    <p class="hearder-name">Nom</p>
-                    <p class="hearder-price">Prix</p>
-                    <p class="hearder-quantity">Quantité</p>
+      <div class="product-line">
+          <p class="hearder-name">Nom</p>
+          <p class="hearder-price">Prix</p>
+          <p class="hearder-quantity">Quantité</p>
 
-                    <p class="product-name">${this.nom}</p>
-                    <p class="product-price">${this.prix}</p>
-                    <p class="product-quantity"></p>
-                    <img src="statics/${this.image}" alt="${this.nom}">
-                </div>
-            </div>
+          <p class="product-name">${this.nom}</p>
+          <p class="product-price">${this.prix}</p>
+          <p class="product-quantity"></p>
+          <img src="statics/${this.image}" alt="${this.nom}">
+      </div>
+                
+  </div>
+  
 
   `;
   }
@@ -94,7 +110,7 @@ class Product {
   displayShoppingCard() {
     const elemensInCard = document.querySelector(".shopping-card");
     elemensInCard.insertAdjacentHTML(
-      "beforeend",
+      "afterbegin",
       this.generateHTMLShoppingCard()
     );
   }
@@ -118,19 +134,29 @@ function createProduct(nom, image, prix) {
 
   console.log("Panier :", shoppingCart);
 }
+
 /**
- * Affiche les produits du panier.
+ * Affiche le panier dans l'élément HTML .shopping-card.
+ * Prend les éléments du panier (un tableau d'objets Product) et les affiche
+ * dans l'élément HTML .shopping-card en utilisant la méthode
+ * generateHTMLShoppingCard() de l'objet Product, ainsi que le montant total
+ * du panier.
  */
 function displayShoppingCardInCart() {
   const shoppingCartElement = document.querySelector(".shopping-card");
-  shoppingCartElement.innerHTML = "";
-  shoppingCart.forEach((product) => {
-    shoppingCartElement.insertAdjacentHTML(
-      "beforeend",
-      product.generateHTMLShoppingCard()
-    );
-  });
+
+  // Génère le code HTML pour le panier en utilisant la méthode
+  // generateHTMLShoppingCard() de l'objet Product.
+  const html = shoppingCart.map((product) =>
+    product.generateHTMLShoppingCard()
+  ).join("");
+  // Affiche le montant total du panier.
+  const totalPrice = Product.calculateTotalPrice(shoppingCart);
+
+  // Affiche le code HTML généré dans l'élément HTML .shopping-card.
+  shoppingCartElement.innerHTML = html + totalPrice;
 }
+
 
 class Categorie {
   constructor(name) {
@@ -236,3 +262,18 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+
+/**
+ * Fonction qui permet d'afficher le panier en cliquant sur l'image panier.
+ */
+function shoppingCardVisibility() {
+  const panier = document.getElementById("panier");
+  if (panier.style.display === "block") {
+    // Masquer le panier
+    panier.style.display = "none";
+  } else {
+    // Afficher le panier
+    panier.style.transition = "all 0.5s ease-in-out";
+    panier.style.display = "block";
+  }
+}
