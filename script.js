@@ -13,7 +13,6 @@ function getData(csvFilePath) {
       // Convertit le contenu du fichier CSV en un tableau d'objets
       const rows = data.split("\n");
       const headers = rows[0].split(",");
-
       const arrayData = rows.slice(1).map((row) => {
         const cols = row.split(",");
         const obj = {};
@@ -37,7 +36,28 @@ class Product {
     this.categorie = categorie;
   }
 
-  // Génère le HTML pour un produit
+  /**
+   * Calcule le montant total du panier, en HT et en TTC, en prenant en compte
+   * les prix des produits dans le tableau listeProduits.
+   */
+  static calculateTotalPrice(listeProduits) {
+    const totalHT = listeProduits.reduce(
+      (acc, { prix }) => acc + parseFloat(prix),
+      0
+    );
+    const totalTTC = totalHT / 1.206;
+
+    return ` 
+      <div class="total-hors-tva"><p>TOTAL HT:</p> ${totalTTC.toFixed(
+        2
+      )}€ </div>
+      <div class="total-ttc"><p>TOTAL TTC:</p>${totalHT.toFixed(2)}€</div>
+    `;
+  }
+
+  /**
+   * Génère le HTML pour un produit.
+   */
   generateHTML() {
     return `
         <div class="card">
@@ -59,7 +79,7 @@ class Product {
               </div>
 
               <!-- Bouton Ajouter au panier -->
-              <button class="cart-button">
+              <button class="cart-button" onclick="createProduct('${this.nom}', '${this.image}', '${this.prix}');displayShoppingCardInCart()">
                   <span>Add to cart</span>
               </button>
           </div>
@@ -67,10 +87,86 @@ class Product {
       `;
   }
 
+  /**
+   * Génère le HTML pour un produit dans le panier.
+   */
+  generateHTMLShoppingCard() {
+    return `
+
+  <div class="product-header">
+
+      <div class="product-line">
+          <p class="hearder-name">Nom</p>
+          <p class="hearder-price">Prix</p>
+          <p class="hearder-quantity">Quantité</p>
+
+          <p class="product-name">${this.nom}</p>
+          <p class="product-price">${this.prix}</p>
+          <p class="product-quantity"></p>
+          <img src="statics/${this.image}" alt="${this.nom}">
+      </div>
+                
+  </div>
+  `;
+  }
+
+  /**
+   * Affiche le produit dans la page.
+   * Prend un élément HTML qui contient la liste des produits de la catégorie
+   * du produit courant, et ajoute le HTML du produit dedans.
+   */
   display() {
     const categoryWrapper = document.querySelector(".products-wrapper");
     categoryWrapper.insertAdjacentHTML("beforeend", this.generateHTML());
   }
+
+  displayShoppingCard() {
+    const elemensInCard = document.querySelector(".shopping-card");
+    elemensInCard.insertAdjacentHTML(
+      "afterbegin",
+      this.generateHTMLShoppingCard()
+    );
+  }
+}
+
+const shoppingCart = [];
+
+/**
+ * Ajoute un produit au panier.
+ */
+function createProduct(nom, image, prix) {
+  // Ajoute le produit au panier.
+  const product = new Product(nom, image, prix);
+  shoppingCart.push(product);
+
+  // Affiche le nombre d'articles dans le panier.
+  document.getElementById("nombre-articles").style.display = "block";
+  document.getElementById(
+    "nombre-articles"
+  ).innerHTML = `${shoppingCart.length}`;
+
+  console.log("Panier :", shoppingCart);
+}
+
+/**
+ * Affiche le panier.
+ * Génère le code HTML pour le panier en utilisant la méthode
+ * generateHTMLShoppingCard() de l'objet Product, et affiche le code
+ * HTML généré dans l'élément HTML .shopping-card.
+ */
+function displayShoppingCardInCart() {
+  const shoppingCartElement = document.querySelector(".shopping-card");
+
+  // Génère le code HTML pour le panier en utilisant la méthode
+  // generateHTMLShoppingCard() de l'objet Product.
+  const html = shoppingCart
+    .map((product) => product.generateHTMLShoppingCard())
+    .join("");
+  // Affiche le montant total du panier.
+  const totalPrice = Product.calculateTotalPrice(shoppingCart);
+
+  // Affiche le code HTML généré dans l'élément HTML .shopping-card.
+  shoppingCartElement.innerHTML = html + totalPrice;
 }
 
 class Categorie {
@@ -177,3 +273,18 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+
+/**
+ * Fonction qui permet d'afficher le panier en cliquant sur l'image panier.
+ */
+function shoppingCardVisibility() {
+  const panier = document.getElementById("panier");
+  if (panier.style.display === "block") {
+    // Masquer le panier
+    panier.style.display = "none";
+  } else {
+    // Afficher le panier
+    panier.style.transition = "all 0.5s ease-in-out";
+    panier.style.display = "block";
+  }
+}

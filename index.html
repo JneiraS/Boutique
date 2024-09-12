@@ -14,20 +14,24 @@
     <header>
         <p>HAIZER</p>
         <div class="logos">
-            <img src="statics/panier.png" alt="cart logo">
+            <button onclick="shoppingCardVisibility()">
+                <img src="statics/panier.png" alt="cart logo" >
+                <p id="nombre-articles"></p>
+            </button>
         </div>
     </header>
-
     <nav>
         <ul>
             <li id="all"><a href="#">Tous nos produits</a></li>
         </ul>
     </nav>
-
     <main>
+        <div id="panier" class="shopping-card">
+        </div>
     </main>
     <script>
     </script>
 </body>
 
 </html>
+
