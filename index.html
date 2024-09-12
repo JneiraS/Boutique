@@ -14,8 +14,10 @@
     <header>
         <p>HAIZER</p>
         <div class="logos">
-            <img src="statics/panier.png" alt="cart logo">
-            <p id="nombre-articles"></p>
+            <button onclick="shoppingCardVisibility()">
+                <img src="statics/panier.png" alt="cart logo" >
+                <p id="nombre-articles"></p>
+            </button>
         </div>
     </header>
     <nav>
@@ -24,7 +26,7 @@
         </ul>
     </nav>
     <main>
-        <div class="shopping-card">
+        <div id="panier" class="shopping-card">
         </div>
     </main>
     <script>
@@ -32,3 +34,4 @@
 </body>
 
 </html>
+
