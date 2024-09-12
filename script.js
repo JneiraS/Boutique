@@ -41,16 +41,23 @@ class Product {
    * les prix des produits dans le tableau listeProduits.
    */
   static calculateTotalPrice(listeProduits) {
-    const totalHT = listeProduits.reduce((acc, { prix }) => acc + parseFloat(prix), 0);
+    const totalHT = listeProduits.reduce(
+      (acc, { prix }) => acc + parseFloat(prix),
+      0
+    );
     const totalTTC = totalHT / 1.206;
 
     return ` 
-      <div class="total-hors-tva"><p>TOTAL HT:</p> ${totalTTC.toFixed(2)}€ </div>
+      <div class="total-hors-tva"><p>TOTAL HT:</p> ${totalTTC.toFixed(
+        2
+      )}€ </div>
       <div class="total-ttc"><p>TOTAL TTC:</p>${totalHT.toFixed(2)}€</div>
     `;
   }
 
-  // Génère le HTML pour un produit
+  /**
+   * Génère le HTML pour un produit.
+   */
   generateHTML() {
     return `
         <div class="card">
@@ -80,6 +87,9 @@ class Product {
       `;
   }
 
+  /**
+   * Génère le HTML pour un produit dans le panier.
+   */
   generateHTMLShoppingCard() {
     return `
 
@@ -97,11 +107,14 @@ class Product {
       </div>
                 
   </div>
-  
-
   `;
   }
 
+  /**
+   * Affiche le produit dans la page.
+   * Prend un élément HTML qui contient la liste des produits de la catégorie
+   * du produit courant, et ajoute le HTML du produit dedans.
+   */
   display() {
     const categoryWrapper = document.querySelector(".products-wrapper");
     categoryWrapper.insertAdjacentHTML("beforeend", this.generateHTML());
@@ -136,27 +149,25 @@ function createProduct(nom, image, prix) {
 }
 
 /**
- * Affiche le panier dans l'élément HTML .shopping-card.
- * Prend les éléments du panier (un tableau d'objets Product) et les affiche
- * dans l'élément HTML .shopping-card en utilisant la méthode
- * generateHTMLShoppingCard() de l'objet Product, ainsi que le montant total
- * du panier.
+ * Affiche le panier.
+ * Génère le code HTML pour le panier en utilisant la méthode
+ * generateHTMLShoppingCard() de l'objet Product, et affiche le code
+ * HTML généré dans l'élément HTML .shopping-card.
  */
 function displayShoppingCardInCart() {
   const shoppingCartElement = document.querySelector(".shopping-card");
 
   // Génère le code HTML pour le panier en utilisant la méthode
   // generateHTMLShoppingCard() de l'objet Product.
-  const html = shoppingCart.map((product) =>
-    product.generateHTMLShoppingCard()
-  ).join("");
+  const html = shoppingCart
+    .map((product) => product.generateHTMLShoppingCard())
+    .join("");
   // Affiche le montant total du panier.
   const totalPrice = Product.calculateTotalPrice(shoppingCart);
 
   // Affiche le code HTML généré dans l'élément HTML .shopping-card.
   shoppingCartElement.innerHTML = html + totalPrice;
 }
-
 
 class Categorie {
   constructor(name) {
