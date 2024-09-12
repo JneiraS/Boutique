@@ -355,3 +355,6 @@ button.cart-button:hover {
     outline: none;
   }
   
+header label input{
+    display: none;
+}
