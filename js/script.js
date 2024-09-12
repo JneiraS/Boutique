@@ -288,3 +288,13 @@ function shoppingCardVisibility() {
     panier.style.display = "block";
   }
 }
+
+
+
+/**
+ * Change la couleur secondaire du site en fonction de la valeur de l'élément
+ * <input type="color"> qui a déclenché l'événement.
+ */
+function changeColor() {
+  document.documentElement.style.setProperty('--color-secondary', event.target.value);
+}

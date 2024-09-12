@@ -343,3 +343,18 @@ button.cart-button:hover {
 .total-hors-tva p, .total-ttc p{
     font-weight: 600;
 }
+
+#color-picker-icon {
+    position: absolute;
+    top: 5px;
+    left: 3em;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    outline: none;
+  }
+  
+header label input{
+    display: none;
+}
